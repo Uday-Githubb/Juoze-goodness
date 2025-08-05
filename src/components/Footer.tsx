@@ -1,20 +1,9 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
-import { 
-  Instagram, 
-  Twitter, 
-  Facebook, 
-  Mail, 
-  Phone, 
-  MapPin,
-  Send,
-  Leaf
-} from "lucide-react";
-
+import { Instagram, Twitter, Facebook, Mail, Phone, MapPin, Send, Leaf } from "lucide-react";
 const Footer = () => {
-  return (
-    <footer className="bg-gradient-to-b from-muted/20 to-primary/5 border-t border-border/50">
+  return <footer className="bg-gradient-to-b from-muted/20 to-primary/5 border-t border-border/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Newsletter Section */}
         <div className="py-16 border-b border-border/50">
@@ -31,10 +20,7 @@ const Footer = () => {
               and health tips delivered straight to your inbox.
             </p>
             <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <Input 
-                placeholder="Enter your email address" 
-                className="glass border-white/20"
-              />
+              <Input placeholder="Enter your email address" className="glass border-white/20" />
               <Button className="group">
                 Subscribe
                 <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 smooth" />
@@ -70,19 +56,11 @@ const Footer = () => {
             <div>
               <h4 className="font-semibold mb-4">Quick Links</h4>
               <ul className="space-y-3">
-                {[
-                  "Menu", "About Us", "Health Benefits", "Nutrition Guide", 
-                  "Delivery Areas", "Corporate Orders"
-                ].map((link) => (
-                  <li key={link}>
-                    <a 
-                      href="#" 
-                      className="text-muted-foreground hover:text-primary smooth"
-                    >
+                {["Menu", "About Us", "Health Benefits", "Nutrition Guide", "Delivery Areas", "Corporate Orders"].map(link => <li key={link}>
+                    <a href="#" className="text-muted-foreground hover:text-primary smooth">
                       {link}
                     </a>
-                  </li>
-                ))}
+                  </li>)}
               </ul>
             </div>
 
@@ -90,19 +68,11 @@ const Footer = () => {
             <div>
               <h4 className="font-semibold mb-4">Support</h4>
               <ul className="space-y-3">
-                {[
-                  "Help Center", "Order Tracking", "Returns & Refunds", 
-                  "Contact Support", "FAQ", "Shipping Info"
-                ].map((link) => (
-                  <li key={link}>
-                    <a 
-                      href="#" 
-                      className="text-muted-foreground hover:text-primary smooth"
-                    >
+                {["Help Center", "Order Tracking", "Returns & Refunds", "Contact Support", "FAQ", "Shipping Info"].map(link => <li key={link}>
+                    <a href="#" className="text-muted-foreground hover:text-primary smooth">
                       {link}
                     </a>
-                  </li>
-                ))}
+                  </li>)}
               </ul>
             </div>
 
@@ -119,21 +89,11 @@ const Footer = () => {
                 </div>
                 <div className="flex items-center gap-3">
                   <Phone className="h-5 w-5 text-primary" />
-                  <a 
-                    href="tel:+1234567890" 
-                    className="text-sm text-muted-foreground hover:text-primary smooth"
-                  >
-                    +1 (234) 567-8900
-                  </a>
+                  <a href="tel:+1234567890" className="text-sm text-muted-foreground hover:text-primary smooth">+91 9811905747</a>
                 </div>
                 <div className="flex items-center gap-3">
                   <Mail className="h-5 w-5 text-primary" />
-                  <a 
-                    href="mailto:hello@freshflow.com" 
-                    className="text-sm text-muted-foreground hover:text-primary smooth"
-                  >
-                    hello@freshflow.com
-                  </a>
+                  <a href="mailto:hello@freshflow.com" className="text-sm text-muted-foreground hover:text-primary smooth">in.uday.work@gmail.com</a>
                 </div>
               </div>
             </div>
@@ -160,8 +120,6 @@ const Footer = () => {
           </div>
         </div>
       </div>
-    </footer>
-  );
+    </footer>;
 };
-
 export default Footer;
