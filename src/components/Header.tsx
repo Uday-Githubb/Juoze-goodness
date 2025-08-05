@@ -3,11 +3,21 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Menu, X, User, Heart, Search } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
+import CartSidebar from "./CartSidebar";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isCartOpen, setIsCartOpen] = useState(false);
   const { items } = useCart();
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
+
+  const scrollToSection = (sectionId: string) => {
+    const element = document.getElementById(sectionId);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+    setIsMenuOpen(false);
+  };
 
   return (
     <header className="sticky top-0 z-50 glass border-b border-white/20">
@@ -20,18 +30,30 @@ const Header = () => {
 
           {/* Desktop Navigation */}
           <nav className="hidden md:flex items-center space-x-8">
-            <a href="#menu" className="text-foreground hover:text-primary smooth">
+            <button 
+              onClick={() => scrollToSection('menu')} 
+              className="text-foreground hover:text-primary smooth"
+            >
               Menu
-            </a>
-            <a href="#about" className="text-foreground hover:text-primary smooth">
-              About
-            </a>
-            <a href="#benefits" className="text-foreground hover:text-primary smooth">
-              Benefits
-            </a>
-            <a href="#contact" className="text-foreground hover:text-primary smooth">
+            </button>
+            <button 
+              onClick={() => scrollToSection('tech-features')} 
+              className="text-foreground hover:text-primary smooth"
+            >
+              Features
+            </button>
+            <button 
+              onClick={() => scrollToSection('order-tracking')} 
+              className="text-foreground hover:text-primary smooth"
+            >
+              Tracking
+            </button>
+            <button 
+              onClick={() => scrollToSection('contact')} 
+              className="text-foreground hover:text-primary smooth"
+            >
               Contact
-            </a>
+            </button>
           </nav>
 
           {/* Desktop Actions */}
@@ -45,7 +67,12 @@ const Header = () => {
             <Button variant="ghost" size="icon">
               <User className="h-5 w-5" />
             </Button>
-            <Button variant="glass" size="icon" className="relative">
+            <Button 
+              variant="glass" 
+              size="icon" 
+              className="relative"
+              onClick={() => setIsCartOpen(true)}
+            >
               <ShoppingCart className="h-5 w-5" />
               {totalItems > 0 && (
                 <Badge className="absolute -top-2 -right-2 h-5 w-5 rounded-full p-0 text-xs bg-secondary">
@@ -71,40 +98,41 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 glass rounded-lg mt-2 mb-2">
-              <a
-                href="#menu"
-                className="block px-3 py-2 text-foreground hover:text-primary smooth"
-                onClick={() => setIsMenuOpen(false)}
+              <button
+                onClick={() => scrollToSection('menu')}
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary smooth"
               >
                 Menu
-              </a>
-              <a
-                href="#about"
-                className="block px-3 py-2 text-foreground hover:text-primary smooth"
-                onClick={() => setIsMenuOpen(false)}
+              </button>
+              <button
+                onClick={() => scrollToSection('tech-features')}
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary smooth"
               >
-                About
-              </a>
-              <a
-                href="#benefits"
-                className="block px-3 py-2 text-foreground hover:text-primary smooth"
-                onClick={() => setIsMenuOpen(false)}
+                Features
+              </button>
+              <button
+                onClick={() => scrollToSection('order-tracking')}
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary smooth"
               >
-                Benefits
-              </a>
-              <a
-                href="#contact"
-                className="block px-3 py-2 text-foreground hover:text-primary smooth"
-                onClick={() => setIsMenuOpen(false)}
+                Tracking
+              </button>
+              <button
+                onClick={() => scrollToSection('contact')}
+                className="block w-full text-left px-3 py-2 text-foreground hover:text-primary smooth"
               >
                 Contact
-              </a>
+              </button>
               <div className="flex items-center space-x-2 px-3 py-2">
                 <Button variant="ghost" size="sm">
                   <User className="h-4 w-4 mr-2" />
                   Profile
                 </Button>
-                <Button variant="glass" size="sm" className="relative">
+                <Button 
+                  variant="glass" 
+                  size="sm" 
+                  className="relative"
+                  onClick={() => setIsCartOpen(true)}
+                >
                   <ShoppingCart className="h-4 w-4 mr-2" />
                   Cart
                   {totalItems > 0 && (
@@ -118,6 +146,9 @@ const Header = () => {
           </div>
         )}
       </div>
+      
+      {/* Cart Sidebar */}
+      <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
     </header>
   );
 };

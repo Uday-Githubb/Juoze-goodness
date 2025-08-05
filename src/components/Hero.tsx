@@ -46,11 +46,31 @@ const Hero = () => {
 
           {/* CTA Buttons */}
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-12 animate-fade-in" style={{ animationDelay: '0.4s' }}>
-            <Button variant="hero" size="xl" className="group">
+            <Button 
+              variant="hero" 
+              size="xl" 
+              className="group"
+              onClick={() => {
+                const menuElement = document.getElementById('menu');
+                if (menuElement) {
+                  menuElement.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               Start Your Journey
               <ArrowRight className="ml-2 h-5 w-5 group-hover:translate-x-1 smooth" />
             </Button>
-            <Button variant="glass" size="xl" className="group">
+            <Button 
+              variant="glass" 
+              size="xl" 
+              className="group"
+              onClick={() => {
+                const trackingElement = document.getElementById('order-tracking');
+                if (trackingElement) {
+                  trackingElement.scrollIntoView({ behavior: 'smooth' });
+                }
+              }}
+            >
               <Play className="mr-2 h-5 w-5" />
               Watch Demo
             </Button>

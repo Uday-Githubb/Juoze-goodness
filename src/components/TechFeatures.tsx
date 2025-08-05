@@ -51,7 +51,7 @@ const features = [{
   color: "from-violet-500 to-blue-500"
 }];
 const TechFeatures = () => {
-  return <section className="py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
+  return <section id="tech-features" className="py-20 bg-gradient-to-b from-muted/20 to-background relative overflow-hidden">
       {/* Background Pattern */}
       <div className="absolute inset-0 opacity-30">
         <div className="absolute top-10 left-10 w-32 h-32 bg-gradient-to-br from-primary/20 to-transparent rounded-full blur-xl animate-float"></div>

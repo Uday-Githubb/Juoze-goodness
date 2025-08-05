@@ -5,11 +5,14 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, Star, Clock, TrendingUp } from "lucide-react";
 import { juices, categories } from "@/data/juices";
 import { useCart } from "@/hooks/useCart";
+import { useToast } from "@/hooks/use-toast";
 
 const FeaturedProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSize, setSelectedSize] = useState<"small" | "medium" | "large">("medium");
+  const [displayCount, setDisplayCount] = useState(6);
   const { addItem } = useCart();
+  const { toast } = useToast();
 
   const filteredJuices = selectedCategory === "All" 
     ? juices 
@@ -23,6 +26,15 @@ const FeaturedProducts = () => {
       image: juice.image,
       size: selectedSize,
     });
+    
+    toast({
+      title: "Added to cart!",
+      description: `${juice.name} (${selectedSize}) has been added to your cart.`,
+    });
+  };
+
+  const handleLoadMore = () => {
+    setDisplayCount(prev => prev + 6);
   };
 
   return (
@@ -76,7 +88,7 @@ const FeaturedProducts = () => {
 
         {/* Products Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredJuices.map((juice, index) => (
+          {filteredJuices.slice(0, displayCount).map((juice, index) => (
             <Card
               key={juice.id}
               className="group overflow-hidden border-0 shadow-card-custom hover:shadow-elegant smooth hover:scale-105 glass"
@@ -166,12 +178,19 @@ const FeaturedProducts = () => {
         </div>
 
         {/* Load More Button */}
-        <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="group">
-            Load More Juices
-            <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 smooth" />
-          </Button>
-        </div>
+        {displayCount < filteredJuices.length && (
+          <div className="text-center mt-12">
+            <Button 
+              variant="outline" 
+              size="lg" 
+              className="group"
+              onClick={handleLoadMore}
+            >
+              Load More Juices
+              <TrendingUp className="ml-2 h-5 w-5 group-hover:translate-x-1 smooth" />
+            </Button>
+          </div>
+        )}
       </div>
     </section>
   );

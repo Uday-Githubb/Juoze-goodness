@@ -1,9 +1,25 @@
+import { useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Instagram, Twitter, Facebook, Mail, Phone, MapPin, Send, Leaf } from "lucide-react";
+import { useToast } from "@/hooks/use-toast";
 const Footer = () => {
-  return <footer className="bg-gradient-to-b from-muted/20 to-primary/5 border-t border-border/50">
+  const [email, setEmail] = useState("");
+  const { toast } = useToast();
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (email) {
+      toast({
+        title: "Thank you for subscribing!",
+        description: "You'll receive our latest updates and exclusive offers.",
+      });
+      setEmail("");
+    }
+  };
+
+  return <footer id="contact" className="bg-gradient-to-b from-muted/20 to-primary/5 border-t border-border/50">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Newsletter Section */}
         <div className="py-16 border-b border-border/50">
@@ -19,13 +35,20 @@ const Footer = () => {
               Subscribe to our newsletter for exclusive offers, new juice launches, 
               and health tips delivered straight to your inbox.
             </p>
-            <div className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
-              <Input placeholder="Enter your email address" className="glass border-white/20" />
-              <Button className="group">
+            <form onSubmit={handleNewsletterSubmit} className="flex flex-col sm:flex-row gap-3 max-w-md mx-auto">
+              <Input 
+                type="email"
+                placeholder="Enter your email address" 
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="glass border-white/20" 
+                required
+              />
+              <Button type="submit" className="group">
                 Subscribe
                 <Send className="ml-2 h-4 w-4 group-hover:translate-x-1 smooth" />
               </Button>
-            </div>
+            </form>
           </div>
         </div>
 
