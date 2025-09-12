@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { Plus, Star, Clock, TrendingUp } from "lucide-react";
+import { Plus, Star, Clock, TrendingUp, Heart } from "lucide-react";
 import { juices, categories } from "@/data/juices";
 import { useCart } from "@/hooks/useCart";
 import { useToast } from "@/hooks/use-toast";
@@ -11,8 +11,22 @@ const FeaturedProducts = () => {
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedSize, setSelectedSize] = useState<"small" | "medium" | "large">("medium");
   const [displayCount, setDisplayCount] = useState(6);
+  const [wishlistItems, setWishlistItems] = useState<string[]>([]);
   const { addItem } = useCart();
   const { toast } = useToast();
+
+  // Load wishlist from localStorage on component mount
+  useEffect(() => {
+    const savedWishlist = localStorage.getItem("juoze-wishlist");
+    if (savedWishlist) {
+      setWishlistItems(JSON.parse(savedWishlist));
+    }
+  }, []);
+
+  // Save wishlist to localStorage whenever items change
+  useEffect(() => {
+    localStorage.setItem("juoze-wishlist", JSON.stringify(wishlistItems));
+  }, [wishlistItems]);
 
   const filteredJuices = selectedCategory === "All" 
     ? juices 
@@ -30,6 +44,24 @@ const FeaturedProducts = () => {
     toast({
       title: "Added to cart!",
       description: `${juice.name} (${selectedSize}) has been added to your cart.`,
+    });
+  };
+
+  const toggleWishlist = (juiceId: string) => {
+    setWishlistItems(prev => {
+      const isInWishlist = prev.includes(juiceId);
+      const newWishlist = isInWishlist
+        ? prev.filter(id => id !== juiceId)
+        : [...prev, juiceId];
+      
+      toast({
+        title: isInWishlist ? "Removed from wishlist" : "Added to wishlist",
+        description: isInWishlist 
+          ? "Item has been removed from your wishlist." 
+          : "Item has been added to your wishlist.",
+      });
+      
+      return newWishlist;
     });
   };
 
@@ -108,10 +140,26 @@ const FeaturedProducts = () => {
                     <Badge className="bg-accent text-accent-foreground">Popular</Badge>
                   )}
                 </div>
-                <div className="absolute top-4 right-4 glass p-2 rounded-full">
-                  <div className="flex items-center gap-1 text-sm">
-                    <Star className="h-4 w-4 text-accent fill-current" />
-                    <span className="font-medium">{(juice.nutritionScore / 10).toFixed(1)}</span>
+                <div className="absolute top-4 right-4 flex gap-2">
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="glass p-2 rounded-full h-8 w-8"
+                    onClick={() => toggleWishlist(juice.id)}
+                  >
+                    <Heart 
+                      className={`h-4 w-4 ${
+                        wishlistItems.includes(juice.id) 
+                          ? 'text-red-500 fill-current' 
+                          : 'text-muted-foreground'
+                      }`}
+                    />
+                  </Button>
+                  <div className="glass p-2 rounded-full">
+                    <div className="flex items-center gap-1 text-sm">
+                      <Star className="h-4 w-4 text-accent fill-current" />
+                      <span className="font-medium">{(juice.nutritionScore / 10).toFixed(1)}</span>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -161,7 +209,7 @@ const FeaturedProducts = () => {
 
                 <div className="flex items-center justify-between">
                   <div className="text-2xl font-bold gradient-text">
-                    ${juice.price[selectedSize].toFixed(2)}
+                    ₹{juice.price[selectedSize]}
                   </div>
                   <Button
                     onClick={() => handleAddToCart(juice)}

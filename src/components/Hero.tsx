@@ -31,17 +31,17 @@ const Hero = () => {
 
           {/* Main Heading */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 animate-fade-in">
-            <span className="gradient-text">Fresh</span>{" "}
-            <span className="text-foreground">Vegetables</span>
+            Welcome to{" "}
+            <span className="gradient-text">Juoze</span>
             <br />
-            <span className="text-foreground">Delivered</span>{" "}
-            <span className="gradient-text">Daily</span>
+            <span className="text-foreground">Fresh Vegetables</span>{" "}
+            <span className="gradient-text">Delivered Daily</span>
           </h1>
 
           {/* Subtitle */}
           <p className="text-lg sm:text-xl lg:text-2xl text-muted-foreground mb-8 max-w-3xl mx-auto animate-fade-in" style={{ animationDelay: '0.2s' }}>
-            Experience the future of wellness with our AI-powered juice recommendations, 
-            real-time tracking, and premium organic vegetables delivered fresh to your door.
+            Experience the future of wellness with Juoze's AI-powered juice recommendations, 
+            real-time tracking, and premium organic vegetables delivered fresh to your door in India.
           </p>
 
           {/* CTA Buttons */}

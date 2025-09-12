@@ -98,7 +98,7 @@ const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
                           )}
                           <div className="flex items-center justify-between">
                             <div className="text-sm font-bold gradient-text">
-                              ${item.price.toFixed(2)}
+                              ₹{item.price}
                             </div>
                             <div className="flex items-center gap-2">
                               <Button
@@ -148,7 +148,7 @@ const CartSidebar = ({ isOpen, onClose }: CartSidebarProps) => {
             <div className="border-t border-border p-6 space-y-4">
               <div className="flex items-center justify-between text-lg font-semibold">
                 <span>Total:</span>
-                <span className="gradient-text">${getTotalPrice().toFixed(2)}</span>
+                <span className="gradient-text">₹{getTotalPrice()}</span>
               </div>
               
               <div className="space-y-2">

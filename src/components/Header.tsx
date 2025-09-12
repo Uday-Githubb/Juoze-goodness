@@ -4,10 +4,16 @@ import { Badge } from "@/components/ui/badge";
 import { ShoppingCart, Menu, X, User, Heart, Search } from "lucide-react";
 import { useCart } from "@/hooks/useCart";
 import CartSidebar from "./CartSidebar";
+import SearchModal from "./SearchModal";
+import ProfileModal from "./ProfileModal";
+import WishlistModal from "./WishlistModal";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isCartOpen, setIsCartOpen] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
+  const [isWishlistOpen, setIsWishlistOpen] = useState(false);
   const { items } = useCart();
   const totalItems = items.reduce((sum, item) => sum + item.quantity, 0);
 
@@ -25,7 +31,7 @@ const Header = () => {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <h1 className="text-2xl font-bold gradient-text">FreshFlow</h1>
+            <h1 className="text-2xl font-bold gradient-text">Juoze</h1>
           </div>
 
           {/* Desktop Navigation */}
@@ -58,13 +64,13 @@ const Header = () => {
 
           {/* Desktop Actions */}
           <div className="hidden md:flex items-center space-x-4">
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" onClick={() => setIsSearchOpen(true)}>
               <Search className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" onClick={() => setIsWishlistOpen(true)}>
               <Heart className="h-5 w-5" />
             </Button>
-            <Button variant="ghost" size="icon">
+            <Button variant="ghost" size="icon" onClick={() => setIsProfileOpen(true)}>
               <User className="h-5 w-5" />
             </Button>
             <Button 
@@ -123,7 +129,7 @@ const Header = () => {
                 Contact
               </button>
               <div className="flex items-center space-x-2 px-3 py-2">
-                <Button variant="ghost" size="sm">
+                <Button variant="ghost" size="sm" onClick={() => setIsProfileOpen(true)}>
                   <User className="h-4 w-4 mr-2" />
                   Profile
                 </Button>
@@ -149,6 +155,15 @@ const Header = () => {
       
       {/* Cart Sidebar */}
       <CartSidebar isOpen={isCartOpen} onClose={() => setIsCartOpen(false)} />
+      
+      {/* Search Modal */}
+      <SearchModal isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      
+      {/* Profile Modal */}
+      <ProfileModal isOpen={isProfileOpen} onClose={() => setIsProfileOpen(false)} />
+      
+      {/* Wishlist Modal */}
+      <WishlistModal isOpen={isWishlistOpen} onClose={() => setIsWishlistOpen(false)} />
     </header>
   );
 };
